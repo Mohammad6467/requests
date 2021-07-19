@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # Learn more: https://github.com/kennethreitz/setup.py
 import os
-import re
 import sys
 
 from codecs import open
@@ -42,8 +41,10 @@ if sys.argv[-1] == 'publish':
 packages = ['requests']
 
 requires = [
-    'chardet>=3.0.2,<5',
-    'idna>=2.5,<3',
+    'charset_normalizer~=2.0.0; python_version >= "3"',
+    'chardet>=3.0.2,<5; python_version < "3"',
+    'idna>=2.5,<3; python_version < "3"',
+    'idna>=2.5,<4; python_version >= "3"',
     'urllib3>=1.21.1,<1.27',
     'certifi>=2017.4.17'
 
@@ -77,7 +78,7 @@ setup(
     package_data={'': ['LICENSE', 'NOTICE']},
     package_dir={'requests': 'requests'},
     include_package_data=True,
-    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
+    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*",
     install_requires=requires,
     license=about['__license__'],
     zip_safe=False,
@@ -90,7 +91,6 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
@@ -101,9 +101,10 @@ setup(
     cmdclass={'test': PyTest},
     tests_require=test_requirements,
     extras_require={
-        'security': ['pyOpenSSL >= 0.14', 'cryptography>=1.3.4'],
+        'security': [],
         'socks': ['PySocks>=1.5.6, !=1.5.7'],
         'socks:sys_platform == "win32" and python_version == "2.7"': ['win_inet_pton'],
+        'use_chardet_on_py3': ['chardet>=3.0.2,<5']
     },
     project_urls={
         'Documentation': 'https://requests.readthedocs.io',
